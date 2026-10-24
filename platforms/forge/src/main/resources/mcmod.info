@@ -1,8 +1,8 @@
 [{
 	"modid": "openterraingenerator",
-	"name": "Open Terrain Generator",
-	"url": "https://www.openterraingenerator.com/",
-	"description": "Team OTG: PG85 (code), MC_Pitman & LordSmellyPants (graphics, web, community). Authvin, SuperCoder79 and Josh/Coll1234567 (more code). This mod is a fork of TerrainControl by Khorn/Wickth, Olof Cayorion Larsson, RutgerKok and Timethor. - OTG: Generate anything! -",
+	"name": "OpenTerrainGenerator: Flow Edition",
+	"url": "https://github.com/PG85/OpenTerrainGenerator",
+	"description": "Team OTG & Flow Project: PG85, Meldexun, NLBlackEagle, Brilliafy, and contributors. OpenTerrainGenerator: Flow Edition (OTG-Flow) provides thread-confined, highly optimized world generation with zero cascade deadlocks, designed for multi-threaded generation with WorldFlow and ChunkFlow.",
 	"version": "${version}",
 	"credits" : "Team OTG",
 	"authorList": [ "PeeGee85", "Authvin", "SuperCoder79", "Josh/Coll1234567", "RutgerKok", "TimeThor", "Khorn/Wickth", "Olof Cayorion Larsson"],
