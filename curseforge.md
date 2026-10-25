@@ -8,14 +8,14 @@
 
 OTG-Flow is built to operate seamlessly with companion Flow optimization mods:
 
-1. 🌊 **[WorldFlow](https://www.curseforge.com/minecraft/mc-mods/worldflow)**:
-   * **Parallel Generation Wavefront**: Generates chunks concurrently across multi-core CPU workers.
-   * **Structure Cascade Eliminator**: Intercepts cross-chunk block placements from OTG structures and stages them, permanently preventing cascading chunk generation freezes.
-   * **Branchless Noise Engine**: Optimizes 3D terrain noise evaluation with zero math deviations.
-2. ⚡ **[ChunkFlow](https://www.curseforge.com/minecraft/mc-mods/chunkflow)**:
-   * **Lock-Free Positional Region I/O**: Eliminates Forge single-thread async I/O clamps and vanilla synchronized region file monitor locks.
-   * **Velocity-Projected Chunk Streaming**: Delivers chunks ahead of players flying at high speeds (Elytra, jetpacks, mounts), eliminating void fall.
-   * **Pooled Native Decompression**: Reduces garbage collection pauses by recycling direct-memory decompression buffers.
+* 🌊 **[WorldFlow](https://www.curseforge.com/minecraft/mc-mods/worldflow)**:
+  * **Parallel Generation Wavefront**: Generates chunks concurrently across multi-core CPU workers.
+  * **Structure Cascade Eliminator**: Intercepts cross-chunk block placements from OTG structures and stages them, permanently preventing cascading chunk generation freezes.
+  * **Branchless Noise Engine**: Optimizes 3D terrain noise evaluation with zero math deviations.
+* ⚡ **[ChunkFlow](https://www.curseforge.com/minecraft/mc-mods/chunkflow)**:
+  * **Lock-Free Positional Region I/O**: Eliminates Forge single-thread async I/O clamps and vanilla synchronized region file monitor locks.
+  * **Velocity-Projected Chunk Streaming**: Delivers chunks ahead of players flying at high speeds (Elytra, jetpacks, mounts), eliminating void fall.
+  * **Pooled Native Decompression**: Reduces garbage collection pauses by recycling direct-memory decompression buffers.
 
 ---
 
@@ -25,40 +25,40 @@ Original OpenTerrainGenerator releases (v9.0 through v9.7) were developed during
 
 OTG-Flow introduces the following specific technical differences and improvements:
 
-1. **Thread-Confined Biome Generation**:
-   * *Original OTG*: Stored scrambled seed state (worldSeed, chunkSeed, groupSeed) directly in instance fields of `Layer` and `LayerBiomeInBiome`. Concurrent chunk requests by multiple threads overwrote each other's seeds, causing corrupted biome boundaries and random exceptions (`ArrayIndexOutOfBoundsException`, `NullPointerException`).
-   * *OTG-Flow*: Confines all mutable seed and scratch state to worker-isolated `ThreadLocal<Scratch>` spaces, making the entire 20-layer biome generation pipeline completely thread-safe and reentrant.
+* **Thread-Confined Biome Generation**:
+  * *Original OTG*: Stored scrambled seed state (worldSeed, chunkSeed, groupSeed) directly in instance fields of `Layer` and `LayerBiomeInBiome`. Concurrent chunk requests by multiple threads overwrote each other's seeds, causing corrupted biome boundaries and random exceptions (`ArrayIndexOutOfBoundsException`, `NullPointerException`).
+  * *OTG-Flow*: Confines all mutable seed and scratch state to worker-isolated `ThreadLocal<Scratch>` spaces, making the entire 20-layer biome generation pipeline completely thread-safe and reentrant.
 
-2. **Lock-Free Thread-Isolated Biome Cache**:
-   * *Original OTG*: Directed all biome lookups into a single shared, non-thread-safe `FifoMap`, which caused severe lock contention or data corruption during asynchronous world generation.
-   * *OTG-Flow*: Replaces the shared map with a dedicated `ThreadLocal<FifoMap>` (1024 chunks per worker thread), delivering zero lock contention.
+* **Lock-Free Thread-Isolated Biome Cache**:
+  * *Original OTG*: Directed all biome lookups into a single shared, non-thread-safe `FifoMap`, which caused severe lock contention or data corruption during asynchronous world generation.
+  * *OTG-Flow*: Replaces the shared map with a dedicated `ThreadLocal<FifoMap>` (1024 chunks per worker thread), delivering zero lock contention.
 
-3. **Elimination of 27+ GB Coordinate Heap Churn**:
-   * *Original OTG*: Instantiated a brand new `ChunkCoordinate` object on every single block check during BO3 and BO4 structure evaluation, generating over 27.3 GB of heap garbage in 25 seconds of generation.
-   * *OTG-Flow*: Implements a fast 256-slot per-thread bitwise canonical cache in `ChunkCoordinate.fromBlockCoords`, completely removing coordinate allocation from top garbage collection profiler hotspots.
+* **Elimination of 27+ GB Coordinate Heap Churn**:
+  * *Original OTG*: Instantiated a brand new `ChunkCoordinate` object on every single block check during BO3 and BO4 structure evaluation, generating over 27.3 GB of heap garbage in 25 seconds of generation.
+  * *OTG-Flow*: Implements a fast 256-slot per-thread bitwise canonical cache in `ChunkCoordinate.fromBlockCoords`, completely removing coordinate allocation from top garbage collection profiler hotspots.
 
-4. **64-Stripe Region Locks for BO4 Structures**:
-   * *Original OTG*: `CustomStructurePlotter` used unsynchronized standard maps and hardcoded `Thread.sleep(20)` pauses that caused long server hangs and thread starvation under parallel load.
-   * *OTG-Flow*: Employs a 64-stripe region hash lock array (`((chunkX * 31) ^ chunkZ) & 63`) and `ConcurrentHashMap`, allowing multiple worker threads to plot structures across different world regions simultaneously without deadlocks.
+* **64-Stripe Region Locks for BO4 Structures**:
+  * *Original OTG*: `CustomStructurePlotter` used unsynchronized standard maps and hardcoded `Thread.sleep(20)` pauses that caused long server hangs and thread starvation under parallel load.
+  * *OTG-Flow*: Employs a 64-stripe region hash lock array (`((chunkX * 31) ^ chunkZ) & 63`) and `ConcurrentHashMap`, allowing multiple worker threads to plot structures across different world regions simultaneously without deadlocks.
 
-5. **Mutable BlockPos During Population**:
-   * *Original OTG*: Allocated new `BlockPos` objects for every individual block placed during terrain generation.
-   * *OTG-Flow*: Replaces allocation hotspots in `OTGChunkGenerator.setBlock` with reusable `MutableBlockPos`, significantly lowering young-generation memory allocation rates.
+* **Mutable BlockPos During Population**:
+  * *Original OTG*: Allocated new `BlockPos` objects for every individual block placed during terrain generation.
+  * *OTG-Flow*: Replaces allocation hotspots in `OTGChunkGenerator.setBlock` with reusable `MutableBlockPos`, significantly lowering young-generation memory allocation rates.
 
-6. **Thread-Safe Tree Loading**:
-   * *Original OTG*: Lazily initialized `TreeGen` arrays without memory barriers, allowing background workers to read partially initialized tree templates.
-   * *OTG-Flow*: Eagerly loads tree templates behind a volatile publication barrier.
+* **Thread-Safe Tree Loading**:
+  * *Original OTG*: Lazily initialized `TreeGen` arrays without memory barriers, allowing background workers to read partially initialized tree templates.
+  * *OTG-Flow*: Eagerly loads tree templates behind a volatile publication barrier.
 
-7. **Cleaned Up Platform Code**:
-   * *Original OTG*: Shipped with an integrated Bukkit/Spigot subproject that added unnecessary complexity.
-   * *OTG-Flow*: Removed the legacy Bukkit codebase (-9,700 lines) to focus exclusively on Minecraft Forge 1.12.2 and Cleanroom MC.
+* **Cleaned Up Platform Code**:
+  * *Original OTG*: Shipped with an integrated Bukkit/Spigot subproject that added unnecessary complexity.
+  * *OTG-Flow*: Removed the legacy Bukkit codebase (-9,700 lines) to focus exclusively on Minecraft Forge 1.12.2 and Cleanroom MC.
 
-8. **Modernized Toolchain**:
-   * *Original OTG*: Locked to obsolete Gradle 4.9 and ForgeGradle 2.3.
-   * *OTG-Flow*: Upgraded to modern Gradle 8.14 and ForgeGradle 6.0, compiling to Java 8 bytecode while offering full compatibility with Cleanroom and modern Java runtimes (Java 8 through Java 25).
+* **Modernized Toolchain**:
+  * *Original OTG*: Locked to obsolete Gradle 4.9 and ForgeGradle 2.3.
+  * *OTG-Flow*: Upgraded to modern Gradle 8.14 and ForgeGradle 6.0, compiling to Java 8 bytecode while offering full compatibility with Cleanroom and modern Java runtimes (Java 8 through Java 25).
 
-9. **100% Bit-Identical Generation Fidelity**:
-   * Despite these architectural and performance changes, OTG-Flow alters zero generation mathematics. Worlds generated with OTG-Flow are bit-exact and identical to original OTG worlds, with full compatibility for presets like **Dregora**, **DregoraRL**, and **Biome Bundle**.
+* **100% Bit-Identical Generation Fidelity**:
+  * Despite these architectural and performance changes, OTG-Flow alters zero generation mathematics. Worlds generated with OTG-Flow are bit-exact and identical to original OTG worlds, with full compatibility for presets like **Dregora**, **DregoraRL**, and **Biome Bundle**.
 
 ---
 
@@ -85,12 +85,12 @@ OTG-Flow introduces the following specific technical differences and improvement
 
 ### 📥 Installation
 
-1. Ensure **Minecraft Forge 14.23.5.2860+** or **Cleanroom** is installed.
-2. Install **MixinBooter** (v10.2 or newer).
-3. Remove any existing `OpenTerrainGenerator-*.jar` from your `mods/` folder.
-4. Drop **`OTG-Flow-1.12.2-v9.7.jar`** into your `mods/` directory.
-5. *(Highly Recommended)* Drop **`WorldFlow`** and **`ChunkFlow`** into your `mods/` directory for parallel generation and high-speed disk I/O.
-6. Start your server or singleplayer world!
+* Ensure **Minecraft Forge 14.23.5.2860+** or **Cleanroom** is installed.
+* Install **MixinBooter** (v10.2 or newer).
+* Remove any existing `OpenTerrainGenerator-*.jar` from your `mods/` folder.
+* Drop **`OTG-Flow-1.12.2-v9.7.jar`** into your `mods/` directory.
+* *(Highly Recommended)* Drop **`WorldFlow`** and **`ChunkFlow`** into your `mods/` directory for parallel generation and high-speed disk I/O.
+* Start your server or singleplayer world!
 
 ---
 
