@@ -7,7 +7,7 @@
 [![Platform](https://img.shields.io/badge/Platform-Cleanroom%20%7C%20Forge-orange.svg?style=for-the-badge)](https://github.com/CleanroomMC)
 [![Build Tool](https://img.shields.io/badge/ForgeGradle-6.0.44-blueviolet.svg?style=for-the-badge)](https://github.com/MinecraftForge/ForgeGradle)
 [![Java](https://img.shields.io/badge/Java-8%20%7C%2025%20(Cleanroom)-success.svg?style=for-the-badge&logo=openjdk)](https://openjdk.org/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE.txt)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Production%20Hardened-brightgreen.svg?style=for-the-badge)](#-benchmarks--stability)
 
 <p align="center">
@@ -210,4 +210,4 @@ Compiled jars will be located in:
 - **Original Project**: [OpenTerrainGenerator](https://github.com/PG85/OpenTerrainGenerator) by **Team OTG** (PG85, RutgerKok, Timethor, Oloflarsson, Khorn/Wickth, Authvin, SuperCoder79, and contributors).
 - **OTG+ Performance Modernization**: **Meldexun** (PR #1020) and **NLBlackEagle**.
 - **Flow Edition Concurrency & Confinement Architecture**: Developed for the **Flow Project** by **Brilliafy**.
-- **License**: Released under the [MIT License](LICENSE.txt).
+- **License**: Released under the [MIT License](LICENSE).
