@@ -43,7 +43,7 @@
 >    - **Parallel Wavefront Scheduler**: Distributes chunk terrain generation across multi-core CPU worker threads.
 >    - **Dregora / OTG Structure Cascade Killer**: Intercepts and stages cross-chunk block placements from complex OTG structures, completely preventing recursive cascading chunk generation freezes.
 >    - **Branchless Noise Engine**: Optimized SIMD-friendly perlin noise calculation with identical vanilla mathematics.
-> 2. ⚡ **[ChunkFlow](https://github.com/CleanroomMC/ChunkFlow)** *(Mandatory for High-Speed Disk I/O & Streaming)*:
+> 2. ⚡ **[ChunkFlow](https://github.com/Brilliafy/ChunkFlow)** *(Mandatory for High-Speed Disk I/O & Streaming)*:
 >    - **Lock-Free Positional I/O (`pread64`)**: Eliminates Forge’s single-threaded async clamp and vanilla's synchronized `.mca` file monitor locks.
 >    - **Directional Velocity Streaming**: Prevents player void fall during high-speed Elytra / modded flight by prioritizing chunks in the player's vector of travel.
 >    - **Native Zlib Buffers**: Recycles direct-memory decompression buffers to eliminate server heap spikes.
