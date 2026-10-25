@@ -192,8 +192,8 @@ OTG-Flow uses modern ForgeGradle 6 and modern Gradle 8.14:
 
 ```bash
 # Clone the repository
-git clone https://github.com/Brilliafy/OpenTerrainGenerator.git
-cd OpenTerrainGenerator
+git clone https://github.com/Brilliafy/OTG-Flow.git
+cd OTG-Flow
 
 # Build with Gradle wrapper
 ./gradlew build
@@ -207,6 +207,6 @@ Compiled jars will be located in:
 ## 📜 Credits & License
 
 - **Original Project**: [OpenTerrainGenerator](https://github.com/PG85/OpenTerrainGenerator) by **Team OTG** (PG85, RutgerKok, Timethor, Oloflarsson, Khorn/Wickth, Authvin, SuperCoder79, and contributors).
-- **OTG+ Performance Modernization**: **Meldexun** (PR #1020) and **NLBlackEagle**.
+- **OTG+ Performance Modernization**: **Meldexun** ([PR #1020](https://github.com/PG85/OpenTerrainGenerator/pull/1020)) and **NLBlackEagle** ([PR #986](https://github.com/PG85/OpenTerrainGenerator/pull/986), [PR #991](https://github.com/PG85/OpenTerrainGenerator/pull/991)).
 - **Flow Edition Concurrency & Confinement Architecture**: Developed for the **Flow Project** by **Brilliafy**.
 - **License**: Released under the [MIT License](LICENSE).
