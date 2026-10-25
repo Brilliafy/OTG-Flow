@@ -5,6 +5,5 @@ pluginManagement {
     }
 }
 
-include 'common', 'bukkit', 'forge'
-project(':bukkit').projectDir = file('platforms/bukkit')
+include 'common', 'forge'
 project(':forge').projectDir = file('platforms/forge')

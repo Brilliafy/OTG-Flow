@@ -39,13 +39,11 @@ configurations {
 
 dependencies {
     shadow project(path: ':common', configuration: 'shadow')
-    shadow project(path: ':bukkit', configuration: 'shadow')
     shadow project(path: ':forge', configuration: 'shadow')
 }
 
 jar {
     dependsOn(':common:shadowJar')
-    dependsOn(':bukkit:jar')
     dependsOn(':forge:reobfJar')
 
     inputs.files(configurations.shadow.incoming.files)

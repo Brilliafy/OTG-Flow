@@ -8,7 +8,6 @@
 [![Build Tool](https://img.shields.io/badge/ForgeGradle-6.0.44-blueviolet.svg?style=for-the-badge)](https://github.com/MinecraftForge/ForgeGradle)
 [![Java](https://img.shields.io/badge/Java-8%20%7C%2025%20(Cleanroom)-success.svg?style=for-the-badge&logo=openjdk)](https://openjdk.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Production%20Hardened-brightgreen.svg?style=for-the-badge)](#-benchmarks--stability)
 
 <p align="center">
   <b>Thread-Confined Biome Pipeline</b> • 
