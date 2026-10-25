@@ -4,15 +4,18 @@
 
 ---
 
-### 📌 Notice: Open-Source Derivative Work and Licensing
+### ⚠️ Recommended Companions (The Flow Worldgen Suite)
 
-**OTG-Flow (OpenTerrainGenerator: Flow Edition)** is an open-source derivative work and optimized fork of **[OpenTerrainGenerator (OTG)](https://www.curseforge.com/minecraft/mc-mods/open-terrain-generator)**.
+OTG-Flow is built to operate seamlessly with companion Flow optimization mods:
 
-* **Original Project on CurseForge**: [OpenTerrainGenerator](https://www.curseforge.com/minecraft/mc-mods/open-terrain-generator)
-* **Original Project Source Code**: [PG85/OpenTerrainGenerator on GitHub](https://github.com/PG85/OpenTerrainGenerator)
-* **Original License**: The original OpenTerrainGenerator project is licensed under the permissive open-source **[MIT License](https://github.com/PG85/OpenTerrainGenerator/blob/master/LICENSE.txt)**.
-* **Permission and Rights**: Under the terms of the MIT License, anyone is granted permission to use, copy, modify, merge, publish, distribute, sublicense, and sell copies of the software without restriction, subject to including the original copyright notice. All original copyright notices from Team OTG and TerrainControl are preserved in full.
-* **Original Credits**: Created by **Team OTG** (PG85, RutgerKok, Timethor, Oloflarsson, Khorn/Wickth, Authvin, SuperCoder79, and contributors), with upstream 1.12 performance updates by **Meldexun** and **NLBlackEagle**.
+1. 🌊 **[WorldFlow](https://www.curseforge.com/minecraft/mc-mods/worldflow)**:
+   * **Parallel Generation Wavefront**: Generates chunks concurrently across multi-core CPU workers.
+   * **Structure Cascade Eliminator**: Intercepts cross-chunk block placements from OTG structures and stages them, permanently preventing cascading chunk generation freezes.
+   * **Branchless Noise Engine**: Optimizes 3D terrain noise evaluation with zero math deviations.
+2. ⚡ **[ChunkFlow](https://www.curseforge.com/minecraft/mc-mods/chunkflow)**:
+   * **Lock-Free Positional Region I/O**: Eliminates Forge single-thread async I/O clamps and vanilla synchronized region file monitor locks.
+   * **Velocity-Projected Chunk Streaming**: Delivers chunks ahead of players flying at high speeds (Elytra, jetpacks, mounts), eliminating void fall.
+   * **Pooled Native Decompression**: Reduces garbage collection pauses by recycling direct-memory decompression buffers.
 
 ---
 
@@ -56,21 +59,6 @@ OTG-Flow introduces the following specific technical differences and improvement
 
 9. **100% Bit-Identical Generation Fidelity**:
    * Despite these architectural and performance changes, OTG-Flow alters zero generation mathematics. Worlds generated with OTG-Flow are bit-exact and identical to original OTG worlds, with full compatibility for presets like **Dregora**, **DregoraRL**, and **Biome Bundle**.
-
----
-
-### ⚠️ Recommended Companions (The Flow Worldgen Suite)
-
-OTG-Flow is built to operate seamlessly with companion Flow optimization mods:
-
-1. 🌊 **[WorldFlow](https://www.curseforge.com/minecraft/mc-mods/worldflow)**:
-   * **Parallel Generation Wavefront**: Generates chunks concurrently across multi-core CPU workers.
-   * **Structure Cascade Eliminator**: Intercepts cross-chunk block placements from OTG structures and stages them, permanently preventing cascading chunk generation freezes.
-   * **Branchless Noise Engine**: Optimizes 3D terrain noise evaluation with zero math deviations.
-2. ⚡ **[ChunkFlow](https://www.curseforge.com/minecraft/mc-mods/chunkflow)**:
-   * **Lock-Free Positional Region I/O**: Eliminates Forge single-thread async I/O clamps and vanilla synchronized region file monitor locks.
-   * **Velocity-Projected Chunk Streaming**: Delivers chunks ahead of players flying at high speeds (Elytra, jetpacks, mounts), eliminating void fall.
-   * **Pooled Native Decompression**: Reduces garbage collection pauses by recycling direct-memory decompression buffers.
 
 ---
 
@@ -119,10 +107,11 @@ OTG-Flow is built to operate seamlessly with companion Flow optimization mods:
 
 ---
 
-### 📜 Credits and Open Source License
+### 📜 Open-Source Licensing and Original Credits
 
-* **Original Mod**: [OpenTerrainGenerator (CurseForge)](https://www.curseforge.com/minecraft/mc-mods/open-terrain-generator) | [OpenTerrainGenerator (GitHub)](https://github.com/PG85/OpenTerrainGenerator)
-* **Original Authors**: Team OTG (PG85, RutgerKok, Timethor, Oloflarsson, Khorn/Wickth, Authvin, SuperCoder79, and contributors).
-* **Upstream 1.12 Performance Updates**: Meldexun (PR #1020) and NLBlackEagle.
-* **Flow Edition Architecture and Concurrency Refactoring**: Developed by Brilliafy for the Flow Optimization Project.
-* **License**: Released under the open-source **[MIT License](https://github.com/PG85/OpenTerrainGenerator/blob/master/LICENSE.txt)**.
+**OTG-Flow (OpenTerrainGenerator: Flow Edition)** is an open-source, modernized fork of **[OpenTerrainGenerator (OTG)](https://www.curseforge.com/minecraft/mc-mods/open-terrain-generator)**.
+
+* **Original Mod on CurseForge**: [OpenTerrainGenerator](https://www.curseforge.com/minecraft/mc-mods/open-terrain-generator)
+* **Original Source Code**: [PG85/OpenTerrainGenerator on GitHub](https://github.com/PG85/OpenTerrainGenerator)
+* **License and Permissions**: The original OpenTerrainGenerator project is released under the permissive open-source **[MIT License](https://github.com/PG85/OpenTerrainGenerator/blob/master/LICENSE.txt)**. Under the terms of the MIT License, permission is granted to use, copy, modify, merge, publish, distribute, sublicense, and sell copies of the software without restriction, provided that the original copyright notice is retained. All original copyright notices from Team OTG and TerrainControl are preserved in full in this project.
+* **Credits**: Created by **Team OTG** (PG85, RutgerKok, Timethor, Oloflarsson, Khorn/Wickth, Authvin, SuperCoder79, and contributors), with upstream 1.12 performance updates by **Meldexun** and **NLBlackEagle**. Flow Edition optimizations developed by Brilliafy.
